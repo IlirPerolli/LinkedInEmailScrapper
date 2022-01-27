@@ -29,9 +29,8 @@ class Scrapper:
         print("Shkruani passwordin e Linkedin:")
         self.password_string = str(input())
         print()
-        print("Shkruani usernamin tuaj:")
+        print("Shkruani usernamin qe deshironi te analizoni:")
         self.link_username = str(input())
-        print()
         # print("Shkruani numrin e posteve qe do te analizoni:")
         # self.number_of_posts = int(input())
     def init(self):
