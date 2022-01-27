@@ -10,7 +10,7 @@ class Scrapper:
     password_string = ""
     link_username = ""
     number_of_posts = 5
-    PAUSE_TIME = 1
+    PAUSE_TIME = 2
     userEmails = []
     newUsers = []
     previousUsers = []
@@ -27,10 +27,19 @@ class Scrapper:
     def credentials(self):
 
         self.username_string = str(input("Shkruani username e Linkedin (email/username?): "))
-        print()
         self.password_string =str(input('Password: '))
-        print()
-        self.link_username = str(input("Shkruani usernamin qe deshironi te analizoni: "))
+        print("Shtypni 1) per te analizuar nje username\nShtypni 2) per te analizuar shume username ")
+        choice = input("Zgjedhja: ")
+        if (choice == '1'):
+            self.link_username = str(input("Shkruani usernamin qe deshironi te analizoni: "))
+
+        if (choice == '2'):
+            username = 'linkedin'
+            while (username != '' or (len(self.newUsers)==0) ):
+                username = str(input("Shkruani usernamin qe deshironi te analizoni (enter per te perfunduar): "))
+                if (username != ""):
+                    self.newUsers.append(username)
+            self.link_username = self.newUsers[0]
         # print("Shkruani numrin e posteve qe do te analizoni:")
         # self.number_of_posts = int(input())
     def init(self):
@@ -52,21 +61,6 @@ class Scrapper:
         recent_activity_link = "https://www.linkedin.com/in/"+username+"/"
 
         self.browser.get(recent_activity_link)
-
-        # number_of_scrolls = -(-self.number_of_posts // 5)
-        #
-        # SCROLL_PAUSE_TIME = 5
-        #
-        # # Get scroll height
-        # last_height = self.browser.execute_script("return document.body.scrollHeight")
-        #
-        # for scroll in range(number_of_scrolls):
-        #     self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        #     time.sleep(SCROLL_PAUSE_TIME)
-        #     new_height = self.browser.execute_script("return document.body.scrollHeight")
-        #     if new_height == last_height:
-        #         break
-        #     last_height = new_height
 
         src = self.browser.page_source
 
@@ -91,7 +85,7 @@ class Scrapper:
                 file = open('emails.txt', 'a')
                 file.write(userEmail + '\n')
                 file.close()
-
+            time.sleep(1)
             print (self.userEmails)
             print (self.newUsers)
         time.sleep(self.PAUSE_TIME)
