@@ -78,8 +78,8 @@ class Scrapper:
                 continue
             self.browser.get(nextUser)
 
-            src = self.browser.page_source
-            userEmail = self.getUserEmail(src)
+            # src = self.browser.page_source
+            userEmail = self.getUserEmail()
             if ((userEmail != None) and (userEmail not in self.userEmails) ):
                 self.userEmails.append(userEmail)
                 file = open('emails.txt', 'a')
@@ -97,8 +97,8 @@ class Scrapper:
 
             self.getData(newUser)
 
-    def getUserEmail(self, src):
-
+    def getUserEmail(self):
+        src = self.browser.page_source
         soup = BeautifulSoup(src, 'html.parser')
         userEmail = soup.find_all("section", attrs={"class":'ci-email'})
         for user in userEmail:
